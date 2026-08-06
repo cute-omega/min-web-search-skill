@@ -1,70 +1,81 @@
-# min-web-search
+# min-web-search-skill
 
-Minimal cross-platform web search via Bing RSS — no API key, no dependencies.
+**No API key. No Docker. No dependencies. Just search.**
 
-## What it does
+## The Problem
 
-Queries `cn.bing.com/search?q=...&format=rss` and returns search results (title, URL, snippet). No API key required.
+AI agents like Hermes, Claude Code, and OpenCode all have a `web_search` tool — but it rarely works out of the box:
 
-## Implementations
+- **API keys are a hassle.** Brave, Tavily, Exa — each requires signing up, getting a key, and configuring it. Most people never bother.
+- **Network restrictions.** If you're in China, Brave and Google are blocked. Even with a key, the connection times out.
+- **Heavy alternatives.** SearXNG requires Docker. Browser automation needs Chromium + Playwright. Overkill for "just search something."
 
-| File | Platform | Dependencies |
+Meanwhile, **Bing's RSS endpoint** (`cn.bing.com/search?q=...&format=rss`) is:
+- Free, no API key needed
+- Accessible from mainland China
+- Returns clean XML with titles, URLs, and snippets
+
+## What This Does
+
+A single script that queries Bing RSS and returns search results. Three implementations, pick whatever fits your system:
+
+| Script | Platform | What it needs |
 |---|---|---|
-| `scripts/search.sh` | Unix-like (Linux, macOS, Alpine, WSL) | curl/wget + sed + grep |
-| `scripts/search.py` | Anywhere with Python 3.8+ | Python stdlib only |
-| `scripts/search.ps1` | Windows (PowerShell 5.1+) | None (built-in) |
+| `search.sh` | Linux, macOS, Alpine, WSL | curl/wget + sed + grep (almost always pre-installed) |
+| `search.py` | Any OS with Python 3.8+ | Python stdlib only (urllib + xml.etree) |
+| `search.ps1` | Windows 10+ | PowerShell (built-in) |
 
 ## Usage
 
-### Shell (recommended — zero dependencies)
-
 ```bash
-./scripts/search.sh "python tutorial"
-./scripts/search.sh "python tutorial" --max 3
-./scripts/search.sh "python tutorial" --json
+# Shell — the lightest option
+./scripts/search.sh "how to install docker"
+./scripts/search.sh "rust tutorial" --max 3
+./scripts/search.sh "openai api" --json
+
+# Python — works everywhere Python exists
+python3 scripts/search.py "python packaging guide"
+
+# PowerShell — Windows native
+.\scripts\search.ps1 "windows service configuration" -Json
 ```
 
-### Python
+## When to Use This
 
-```bash
-python3 scripts/search.py "python tutorial"
-python3 scripts/search.py "python tutorial" --max 3
-python3 scripts/search.py "python tutorial" --json
-```
-
-### PowerShell
-
-```powershell
-.\scripts\search.ps1 "python tutorial"
-.\scripts\search.ps1 "python tutorial" -Max 3
-.\scripts\search.ps1 "python tutorial" -Json
-```
+- Your `web_search` tool says "API key not set" and you don't want to get one
+- You're behind a firewall that blocks Brave/Google but allows Bing
+- You're in a minimal Docker container (Alpine) where installing Python isn't worth it
+- You just need a quick search without configuring anything
 
 ## Output
 
-**Human-readable:**
+Human-readable by default:
 ```
-1. Welcome to Python.org
-   https://www.python.org/
-   The mission of the Python Software Foundation...
+1. How to Install Docker on Ubuntu 22.04
+   https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
+   Step 1: Update your existing list of packages...
 ```
 
-**JSON (`--json`):**
+JSON mode (`--json`) for programmatic use:
 ```json
 {
   "success": true,
-  "query": "python tutorial",
+  "query": "how to install docker",
   "results": [
-    {"title": "Welcome to Python.org", "url": "https://www.python.org/", "snippet": "..."}
+    {
+      "title": "How to Install Docker on Ubuntu 22.04",
+      "url": "https://www.digitalocean.com/...",
+      "snippet": "Step 1: Update your existing list of packages..."
+    }
   ]
 }
 ```
 
 ## Limitations
 
-- Uses Bing China (`cn.bing.com`) — results may be region-biased
+- Bing China (`cn.bing.com`) may bias results toward Chinese content
 - RSS returns max ~10 results, no pagination
-- `grep -oP` needs GNU grep (macOS: `brew install grep` for `ggrep`)
+- `grep -oP` in the shell version requires GNU grep (macOS users: `brew install grep`)
 
 ## License
 
