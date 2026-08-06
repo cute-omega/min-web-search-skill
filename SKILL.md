@@ -24,16 +24,7 @@ Queries `cn.bing.com/search?q=...&format=rss` and parses the XML response. The R
 
 ## Usage
 
-### Unix-like (shell) — recommended, zero dependencies
-
-```bash
-# Requires only: curl (or wget) + sed + grep -oP — available on virtually all Unix systems
-./scripts/search.sh "your query"
-./scripts/search.sh "your query" --max 3
-./scripts/search.sh "your query" --json
-```
-
-### Linux / macOS / Windows (Python)
+### Python — recommended
 
 ```bash
 # Requires: Python 3.8+ (standard library only)
@@ -42,7 +33,16 @@ python3 scripts/search.py "your query" --max 3
 python3 scripts/search.py "your query" --json
 ```
 
-### Windows (PowerShell)
+### Shell — fallback when Python is unavailable
+
+```bash
+# Requires: curl (or wget) + sed + grep -oP + awk
+./scripts/search.sh "your query"
+./scripts/search.sh "your query" --max 3
+./scripts/search.sh "your query" --json
+```
+
+### Windows PowerShell
 
 ```powershell
 # Requires: PowerShell 5.1+ (built into Windows 10+)
@@ -55,9 +55,9 @@ python3 scripts/search.py "your query" --json
 
 | Environment | Recommended | Fallback |
 |---|---|---|
-| Linux / macOS with Python | `search.sh` | `search.py` |
-| Linux / macOS without Python | `search.sh` | — |
-| Windows (PowerShell) | `search.ps1` | `search.py` |
+| Python available | `search.py` | `search.sh` or `search.ps1` |
+| No Python, Unix-like | `search.sh` | — |
+| Windows | `search.ps1` | `search.py` |
 | Minimal Docker / Alpine | `search.sh` | — |
 
 ## Output Format
@@ -83,23 +83,14 @@ python3 scripts/search.py "your query" --json
 ## Limitations
 
 - Uses Bing China (`cn.bing.com`) — results may be region-biased
-- RSS endpoint returns ~10 results max per query
-- No pagination support (RSS doesn't provide offsets)
+- RSS endpoint returns ~10 results max per query, no pagination
 - Rate limiting may apply under heavy use
-
-## Integration with Hermes
-
-To use as a fallback when `web_search` fails, run the script from the terminal tool:
-
-```
-terminal: ~/.hermes/skills/min-web-search/scripts/search.sh "query" --json
-```
+- `grep -oP` in the shell version requires GNU grep (macOS: `brew install grep`)
 
 ## Common Pitfalls
 
 - On some networks `cn.bing.com` may be slow; `www.bing.com` is an alternative
 - The RSS feed occasionally returns empty results for very niche queries
-- `grep -oP` requires GNU grep (standard on Linux; macOS needs `ggrep` via `brew install grep`)
 - PowerShell 5.1+ is required on Windows (ships with Windows 10+)
 
 ## Verification Checklist
