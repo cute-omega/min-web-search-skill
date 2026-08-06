@@ -20,7 +20,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 
-BING_RSS = "https://cn.bing.com/search?q={query}&format=rss"
+BING_RSS = "https://www.bing.com/search?q={query}&format=rss"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 
 

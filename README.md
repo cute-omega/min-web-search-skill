@@ -10,7 +10,7 @@ AI agents all have a `web_search` tool — but it rarely works out of the box:
 - **Network restrictions.** If you're in China, Brave and Google are blocked. Even with a key, the connection times out.
 - **Heavy alternatives.** SearXNG requires Docker. Browser automation needs Chromium + Playwright.
 
-Meanwhile, **Bing's RSS endpoint** (`cn.bing.com/search?q=...&format=rss`) is:
+Meanwhile, **Bing's RSS endpoint** (`www.bing.com/search?q=...&format=rss`) is:
 - Free, no API key needed
 - Accessible from mainland China
 - Returns clean XML with titles, URLs, and snippets
@@ -63,7 +63,7 @@ JSON mode (`--json`):
 
 ## Limitations
 
-- Bing China (`cn.bing.com`) — results may bias toward Chinese content
+- Bing China (`www.bing.com`) — results may bias toward Chinese content
 - RSS returns max ~10 results, no pagination
 - `grep -oP` in the shell version requires GNU grep
 

@@ -39,7 +39,7 @@ urlencode() {
 }
 
 ENCODED=$(urlencode "$QUERY")
-URL="https://cn.bing.com/search?q=${ENCODED}&format=rss"
+URL="https://www.bing.com/search?q=${ENCODED}&format=rss"
 
 # ── fetch RSS ──
 RSS=""

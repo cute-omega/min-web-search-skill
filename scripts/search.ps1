@@ -33,7 +33,7 @@ param(
 $ErrorActionPreference = "Stop"
 $UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 $encoded = [System.Uri]::EscapeDataString($Query)
-$url = "https://cn.bing.com/search?q=$encoded&format=rss"
+$url = "https://www.bing.com/search?q=$encoded&format=rss"
 
 try {
     $resp = Invoke-WebRequest -Uri $url -UserAgent $UA -TimeoutSec 10 -UseBasicParsing

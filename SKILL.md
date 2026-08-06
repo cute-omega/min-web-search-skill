@@ -20,7 +20,7 @@ Use this skill when the user asks you to search the web and the built-in `web_se
 
 ## How It Works
 
-Queries `cn.bing.com/search?q=...&format=rss` and parses the XML response. The RSS feed returns titles, URLs, and snippets — everything needed for a basic web search.
+Queries `www.bing.com/search?q=...&format=rss` and parses the XML response. The RSS feed returns titles, URLs, and snippets — everything needed for a basic web search.
 
 ## Usage
 
@@ -82,14 +82,14 @@ python3 scripts/search.py "your query" --json
 
 ## Limitations
 
-- Uses Bing China (`cn.bing.com`) — results may be region-biased
+- Uses Bing China (`www.bing.com`) — results may be region-biased
 - RSS endpoint returns ~10 results max per query, no pagination
 - Rate limiting may apply under heavy use
 - `grep -oP` in the shell version requires GNU grep (macOS: `brew install grep`)
 
 ## Common Pitfalls
 
-- On some networks `cn.bing.com` may be slow; `www.bing.com` is an alternative
+- On some networks `www.bing.com` may be slow; `www.bing.com` is an alternative
 - The RSS feed occasionally returns empty results for very niche queries
 - PowerShell 5.1+ is required on Windows (ships with Windows 10+)
 
