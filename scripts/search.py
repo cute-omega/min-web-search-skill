@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-min-web-search: Bing RSS web search, no API key required.
+min-web-search: Bing web search, no API key required.
 
 Works on Linux / macOS / Windows (anywhere Python 3.8+ is available).
 Uses Bing's public RSS endpoint — no authentication, no rate-limit keys.
@@ -13,6 +13,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -49,8 +50,6 @@ def search(query: str, max_results: int = 5, timeout: int = 10) -> dict:
         link = (link_el.text or "").strip()
         snippet = ""
         if desc_el is not None and desc_el.text:
-            # Strip HTML tags from description
-            import re
             snippet = re.sub(r"<[^>]+>", "", desc_el.text).strip()
         if title and link:
             results.append({"title": title, "url": link, "snippet": snippet})

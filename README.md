@@ -73,7 +73,7 @@ JSON mode (`--json`) for programmatic use:
 
 ## Limitations
 
-- Bing China (`cn.bing.com`) may bias results toward Chinese content
+- Uses Bing China (`cn.bing.com`) — results may bias toward Chinese content
 - RSS returns max ~10 results, no pagination
 - `grep -oP` in the shell version requires GNU grep (macOS users: `brew install grep`)
 

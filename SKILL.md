@@ -1,7 +1,7 @@
 ---
 name: min-web-search
-description: "Minimal cross-platform web search via Bing RSS — no API key, no dependencies. Three implementations: shell (curl+grep), Python (stdlib), PowerShell (Windows native)."
-version: 1.0.0
+description: "Minimal cross-platform web search via Bing RSS — no API key, no dependencies beyond Python 3.8+ or curl."
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -20,7 +20,7 @@ Use this skill when the user asks you to search the web and the built-in `web_se
 
 ## How It Works
 
-Queries `cn.bing.com/search?q=...&format=rss` and parses the XML response. The RSS feed returns titles, URLs, and snippets.
+Queries `cn.bing.com/search?q=...&format=rss` and parses the XML response. The RSS feed returns titles, URLs, and snippets — everything needed for a basic web search.
 
 ## Usage
 
